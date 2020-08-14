@@ -1,0 +1,108 @@
+{% extends 'index.html' %}
+{% block content %}
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Checkout</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active">Checkout</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start Cart  -->
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row new-account-login">
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="title-left">
+                        Invoice: {{orders.invoice}}
+                        <br>
+                        Status: {{orders.status}}
+                        <br>
+                        Customer name: {{user.username}}
+                        <br>
+                        Customer email: {{user.email}}
+                        <br>
+                       
+                    </div>
+                    
+                </div>
+                
+                    
+            </div>
+            <div class="row">
+               
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    
+                        <div class="col-md-12 col-lg-12">
+                            <div class="odr-box">
+                                
+                                <div class="title-left">
+                                    <h3>Shopping cart</h3>
+                                </div>
+                                {% for key, item in orders.orders.items() %}
+                                <div class="rounded p-2 bg-light">
+                                    <div class="media mb-2 border-bottom">
+                                        <div class="media-body">  {{ item.name }}
+                                            {% set subtotal = item.quantity|int * item.price|int  %}
+                                            <div class="small text-muted">Price: ${{ item.price }} <span class="mx-2">|</span> Qty: {{ item.quantity }} <span class="mx-2">|</span> Subtotal: ${{ subtotal }}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="order-box">
+                                <div class="title-left">
+                                    {% if orders.status =='Paid' %}
+                                    {% else %}
+                                    <form action="{{url_for('payment')}}" method="POST" class="review-form-box">
+                                        {% set amount =  grandTotal.replace('.','') %}
+                                        <input type="hidden" name="amount" value="{{amount}}">
+                                        <input type="hidden" name="invoice" value="{{orders.invoice}}">
+                                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                            data-key="pk_test_51HAr2OCo59Jmv3PWhGLp6oZsVygUYGSBugcXG5SXyWx0Znre1QJEmD9WCgDTKeIjI53DaZ8EMOssyud709Fk1dRP00EKRE2ob3" data-name="{{user.usernamename}}"
+                                            data-description="myshop parchase" data-amount="{{amount}}" data-currency="usd">
+                                            </script>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                                
+                                
+                                <hr class="my-1">
+                               
+                                <div class="d-flex">
+                                    <h4>Tax</h4>
+                                    <div class="ml-auto font-weight-bold"> $ {{ tax }} </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h4>Shipping Cost</h4>
+                                    <div class="ml-auto font-weight-bold"> Free </div>
+                                </div>
+                                <hr>
+                                <div class="d-flex gr-total">
+                                    <h5>Grand Total</h5>
+                                    <div class="ml-auto h5"> $ {{ grandTotal }} </div>
+                                </div>
+                                <hr> </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Cart -->
+
+ {% endblock content %}

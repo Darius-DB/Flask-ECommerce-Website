@@ -1,0 +1,81 @@
+{% extends 'index.html' %}
+{% block content %}
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Register</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+                    <li class="breadcrumb-item active"> Login </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+
+<!-- Start Contact Us  -->
+<div class="contact-box-main">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-8 col-sm-12">
+                <div class="contact-form-right">
+                    <h2>Login</h2>
+                    <p>To use all of our website functionalities pleaselog in.</p>
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {% if form.email.errors %}
+                                    {{ form.email(class='is-invalid form-control') }}
+                                    <div class="help-block with-errors">
+                                        {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.email(class='form-control' ,placeholder='Email') }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {% if form.password.errors %}
+                                    {{ form.password(class='is-invalid form-control') }}
+                                    <div class="help-block with-errors">
+                                        {% for error in form.password.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.password(class='form-control' ,placeholder='Password') }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="submit-button text-center">
+                                    {{ form.submit(class="btn hvr-hover h3 text-center") }}
+                                    <small class="text-muted ml-2">
+                                        <a href="{{ url_for('reset_request') }}">Forgot Password?</a>
+                                    </small>
+                                </div>
+                                <div class="border-top pt-3">
+                                    <span class="text-muted">
+                                        Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
+                                    </span
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Cart -->
+{% endblock content %}

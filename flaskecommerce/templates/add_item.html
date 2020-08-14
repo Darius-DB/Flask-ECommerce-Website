@@ -1,0 +1,179 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Add Item</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active"> Add Item </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+    
+    <!-- Start Contact Us  -->
+    <div class="contact-box-main">
+        <div class="container">
+            <div class="row">
+    
+                <div class="col-lg-8 col-sm-12">
+                    <div class="contact-form-right">
+                        <h2>Add Item</h2>
+                        
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            {{ form.hidden_tag() }}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+    
+                                        {% if form.category.errors %}
+                                        {{ form.category(class='is-invalid form-control') }}
+                                        <div class="help-block with-errors">
+                                            {% for error in form.category.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                            {{ form.category(class='form-control' ,placeholder='Add Category') }}
+                                        {% endif %}
+    
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {% if form.sub_category.errors %}
+                                            {{ form.sub_category(class='is-invalid form-control') }}
+                                            <div class="help-block with-errors">
+                                                {% for error in form.sub_category.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.sub_category(class='form-control' ,placeholder='Add SubCategory') }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {% if form.title.errors %}
+                                        {{ form.title(class='is-invalid form-control') }}
+                                        <div class="help-block with-errors">
+                                            {% for error in form.title.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.title(class='form-control' ,placeholder='Add Title') }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {% if form.price.errors %}
+                                        {{ form.price(class='is-invalid form-control') }}
+                                        <div class="help-block with-errors">
+                                            {% for error in form.price.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.price(class='form-control' ,placeholder='Add Price') }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {% if form.stock.errors %}
+                                        {{ form.stock(class='is-invalid form-control') }}
+                                        <div class="help-block with-errors">
+                                            {% for error in form.stock.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.stock(class='form-control' ,placeholder='Add Stock') }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {% if form.description.errors %}
+                                        {{ form.description(class='is-invalid form-control') }}
+                                        <div class="help-block with-errors">
+                                            {% for error in form.description.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.description(class='form-control' ,placeholder='Add Description') }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        
+                                        {% if form.size.errors %}
+                                        {{ form.size(class='is-invalid form-control') }}
+                                        <div class="help-block with-errors">
+                                            {% for error in form.size.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                            {{ form.size(class='form-control' ,placeholder='Add Size') }}
+                                        {% endif %}
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {{ form.picture_1.label() }}
+                                        {{ form.picture_1(class="form-control-file") }}
+                                        {% if form.picture_1.errors %}
+                                            {% for error in form.picture_1.errors %}
+                                                <span class="text-danger">{{ error }}</span></br>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {{ form.picture_2.label() }}
+                                        {{ form.picture_2(class="form-control-file") }}
+                                        {% if form.picture_2.errors %}
+                                            {% for error in form.picture_2.errors %}
+                                                <span class="text-danger">{{ error }}</span></br>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {{ form.picture_3.label() }}
+                                        {{ form.picture_3(class="form-control-file") }}
+                                        {% if form.picture_3.errors %}
+                                            {% for error in form.picture_3.errors %}
+                                                <span class="text-danger">{{ error }}</span></br>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="submit-button text-center">
+                                        {{ form.submit(class="btn hvr-hover h3 text-center") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

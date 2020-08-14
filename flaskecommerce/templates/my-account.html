@@ -1,0 +1,92 @@
+{% extends 'index.html' %}
+{% block content %}
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>My Account</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Shop</a></li>
+                        <li class="breadcrumb-item active">My Account</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <div class="contact-box-main">
+        <div class="container">
+            <div class="row">
+    
+                <div class="col-lg-8 col-sm-12">
+                    <div class="contact-form-right">
+                        <h2>Update Account</h2>
+                        <div class="content-section">
+                            <div class="media">
+                                <img class="rounded-circle account-img" src="{{ url_for('static', filename='images/' + current_user.image_file) }}" height="70" width="70">
+                                <div class="media-body">
+                                    <h2 class="account-heading">{{ current_user.username }}</h2>
+                                    <p class="text-secondary">{{ current_user.email }}</p>
+                                </div>
+                            </div>
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            {{ form.hidden_tag() }}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+    
+                                        {% if form.username.errors %}
+                                        {{ form.username(class='is-invalid form-control') }}
+                                        <div class="help-block with-errors">
+                                            {% for error in form.username.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.username(class='form-control' ,placeholder='Username') }}
+                                        {% endif %}
+    
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {% if form.email.errors %}
+                                        {{ form.email(class='is-invalid form-control') }}
+                                        <div class="help-block with-errors">
+                                            {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.email(class='form-control' ,placeholder='Email') }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {{ form.picture.label() }}
+                                        {{ form.picture(class="form-control-file") }}
+                                        {% if form.picture.errors %}
+                                            {% for error in form.picture.errors %}
+                                                <span class="text-danger">{{ error }}</span></br>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="submit-button text-center">
+                                        {{ form.submit(class="btn hvr-hover h3 text-center") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
