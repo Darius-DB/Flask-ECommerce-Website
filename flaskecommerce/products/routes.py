@@ -1,29 +1,24 @@
 import secrets
-from flask import Blueprint, render_template, abort, redirect, url_for, request, flash
+from flask import Blueprint, render_template, abort, redirect, url_for, request, flash, current_app
 from flaskecommerce.models import User, Item
 from flaskecommerce.products.forms import AddItemForm
 from flaskecommerce import photos, db, app
 from flask_login import current_user, login_required
 
 
-@app.route('/item/new', methods=['GET', 'POST'])
+@app.route('/item/new', methods=['GET', 'item'])
 @login_required
 def new_item():
     admin = User.query.get(1)
     form = AddItemForm()
-    if form.validate_on_submit() and current_user.username == admin.username:
-        if form.picture_1.data:
-            picture_1 = photos.save(
-                form.picture_1.data, name=secrets.token_hex(10) + ".")
-            item = Item(image_1=picture_1)
-        if form.picture_2.data:
-            picture_2 = photos.save(
-                form.picture_2.data, name=secrets.token_hex(10) + ".")
-            item = Item(image_2=picture_2)
-        if form.picture_3.data:
-            picture_3 = photos.save(
-                form.picture_3.data, name=secrets.token_hex(10) + ".")
-            item = Item(image_3=picture_3)
+    if form.validate_on_submit() and current_user.username == admin.username and 'picture_1' in request.files and 'picture_2' in request.files and 'picture_3' in request.files:
+        image_1 = photos.save(request.files.get(
+            'picture_1'), name=secrets.token_hex(10) + ".")
+        image_2 = photos.save(request.files.get(
+            'picture_2'), name=secrets.token_hex(10) + ".")
+        image_3 = photos.save(request.files.get(
+            'picture_3'), name=secrets.token_hex(10) + ".")
+        
 
         item = Item(
             category=form.category.data,
@@ -32,7 +27,10 @@ def new_item():
             item_price=form.price.data,
             stock=form.stock.data,
             item_description=form.description.data,
-            item_size=form.size.data
+            item_size=form.size.data,
+            image_1=image_1,
+            image_2=image_2,
+            image_3=image_3
         )
 
         db.session.add(item)
@@ -44,13 +42,13 @@ def new_item():
     return render_template('add_item.html', form=form)
 
 
-@app.route('/item/<int:id>', methods=['GET', 'POST'])
+@app.route('/item/<int:id>', methods=['GET', 'item'])
 def item(id):
     item = Item.query.get_or_404(id)
     return render_template('shop-detail.html', item=item)
 
 
-@app.route('/item/<int:id>/update', methods=['GET', 'POST'])
+@app.route('/item/<int:id>/update', methods=['GET', 'item'])
 @login_required
 def update_item(id):
     item = Item.query.get_or_404(id)
@@ -60,18 +58,32 @@ def update_item(id):
         abort(403)
 
     if form.validate_on_submit() and current_user.username == admin.username:
-        if form.picture_1.data:
-            picture_1 = photos.save(
-                form.picture_1.data, name=secrets.token_hex(10) + ".")
-            item.image_1 = picture_1
-        if form.picture_2.data:
-            picture_2 = photos.save(
-                form.picture_2.data, name=secrets.token_hex(10) + ".")
-            item.image_2 = picture_2
-        if form.picture_3.data:
-            picture_3 = photos.save(
-                form.picture_3.data, name=secrets.token_hex(10) + ".")
-            item.image_3 = picture_3
+        if request.files.get('image_1'):
+            try:
+                
+                item.image_1 = photos.save(request.files.get(
+                    'image_1'), name=secrets.token_hex(10) + ".")
+            except:
+                item.image_1 = photos.save(request.files.get(
+                    'image_1'), name=secrets.token_hex(10) + ".")
+
+        if request.files.get('image_2'):
+            try:
+
+                item.image_2 = photos.save(request.files.get(
+                    'image_2'), name=secrets.token_hex(10) + ".")
+            except:
+                item.image_2 = photos.save(request.files.get(
+                    'image_2'), name=secrets.token_hex(10) + ".")
+
+        if request.files.get('image_3'):
+            try:
+
+                item.image_3 = photos.save(request.files.get(
+                    'image_3'), name=secrets.token_hex(10) + ".")
+            except:
+                item.image_3 = photos.save(request.files.get(
+                    'image_3'), name=secrets.token_hex(10) + ".")
 
         item.category = form.category.data
         item.sub_category = form.sub_category.data
@@ -97,7 +109,7 @@ def update_item(id):
     return render_template('add_item.html', form=form, item=item, admin=admin)
 
 
-@app.route('/item/<int:id>/delete', methods=['GET', 'POST'])
+@app.route('/item/<int:id>/delete', methods=['GET', 'item'])
 @login_required
 def delete_item(id):
     item = Item.query.get_or_404(id)
